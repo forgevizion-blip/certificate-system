@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hackathon Certificate Portal</title>
+  <title>Code Fuzion — 24 Hour Hackathon | Certificate Registry</title>
   <!-- pdf-lib library -->
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <style>
@@ -13,16 +13,18 @@
       --border: #e2e8f0;
       --text-main: #0f172a;
       --text-muted: #64748b;
-      --primary: #4f46e5;
-      --primary-hover: #4338ca;
+      --primary: #1758c3;
+      --primary-hover: #13469e;
       --primary-text: #ffffff;
+      --accent-gold: #d97706;
+      --accent-gold-bg: #fef3c7;
       --success-bg: #ecfdf5;
       --success-border: #a7f3d0;
       --success-text: #065f46;
       --error-bg: #fef2f2;
       --error-border: #fecaca;
       --error-text: #991b1b;
-      --radius: 12px;
+      --radius: 16px;
       --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
@@ -34,6 +36,10 @@
 
     body {
       background-color: var(--bg);
+      background-image: 
+        linear-gradient(to right, rgba(226, 232, 240, 0.6) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(226, 232, 240, 0.6) 1px, transparent 1px);
+      background-size: 32px 32px;
       color: var(--text-main);
       font-family: var(--font-family);
       min-height: 100vh;
@@ -41,21 +47,68 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 24px 16px;
       line-height: 1.5;
     }
 
     .container {
       width: 100%;
-      max-width: 480px;
+      max-width: 520px;
+    }
+
+    /* Brand Header */
+    .brand-banner {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .brand-logo-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(23, 88, 195, 0.1);
+      margin-bottom: 12px;
+    }
+
+    .brand-org {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .brand-lpu {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 8px;
     }
 
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 32px 24px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      padding: 32px 28px;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #1758c3 0%, #38bdf8 50%, #f59e0b 100%);
     }
 
     .header {
@@ -63,17 +116,58 @@
       margin-bottom: 24px;
     }
 
-    .header h1 {
-      font-size: 1.5rem;
+    .event-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 9999px;
+      font-size: 0.72rem;
       font-weight: 700;
-      color: var(--text-main);
-      letter-spacing: -0.02em;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
     }
 
-    .header p {
-      font-size: 0.875rem;
+    .event-badge span.dot {
+      width: 6px;
+      height: 6px;
+      background: #2563eb;
+      border-radius: 50%;
+      margin-right: 6px;
+      animation: pulse 2s infinite;
+    }
+
+    .header h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+
+    .header h1 span.tagline {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
       color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
       margin-top: 6px;
+    }
+
+    .notice-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 3px solid #f59e0b;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      color: #475569;
+      line-height: 1.45;
+      margin-bottom: 20px;
     }
 
     .form-group {
@@ -82,7 +176,7 @@
 
     label {
       display: block;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       font-weight: 600;
       margin-bottom: 8px;
       color: var(--text-main);
@@ -91,10 +185,10 @@
     input[type="text"] {
       width: 100%;
       padding: 12px 14px;
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-family: inherit;
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 10px;
       outline: none;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
       background: #ffffff;
@@ -102,7 +196,7 @@
 
     input[type="text"]:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+      box-shadow: 0 0 0 3px rgba(23, 88, 195, 0.15);
     }
 
     .btn {
@@ -110,45 +204,53 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      padding: 12px 20px;
+      padding: 13px 20px;
       font-size: 0.95rem;
-      font-weight: 600;
+      font-weight: 700;
       font-family: inherit;
       color: var(--primary-text);
       background-color: var(--primary);
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background-color 0.15s ease, opacity 0.15s ease;
+      transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
       text-decoration: none;
+      box-shadow: 0 4px 12px rgba(23, 88, 195, 0.25);
     }
 
     .btn:hover:not(:disabled) {
       background-color: var(--primary-hover);
+      box-shadow: 0 6px 16px rgba(23, 88, 195, 0.35);
+    }
+
+    .btn:active:not(:disabled) {
+      transform: scale(0.99);
     }
 
     .btn:disabled {
       opacity: 0.65;
       cursor: not-allowed;
+      box-shadow: none;
     }
 
     .btn-secondary {
-      background: transparent;
-      color: var(--text-muted);
+      background: #f1f5f9;
+      color: var(--text-main);
       border: 1px solid var(--border);
-      margin-top: 12px;
+      box-shadow: none;
+      margin-top: 14px;
     }
 
     .btn-secondary:hover:not(:disabled) {
-      background: #f1f5f9;
-      color: var(--text-main);
+      background: #e2e8f0;
+      box-shadow: none;
     }
 
     .status-box {
       margin-top: 20px;
-      padding: 16px;
-      border-radius: 8px;
-      font-size: 0.9rem;
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 0.88rem;
     }
 
     .status-success {
@@ -165,7 +267,7 @@
 
     .result-card {
       margin-top: 24px;
-      border-top: 1px solid var(--border);
+      border-top: 1px dashed var(--border);
       padding-top: 20px;
     }
 
@@ -173,36 +275,37 @@
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      padding: 8px 0;
-      border-bottom: 1px dashed var(--border);
+      padding: 9px 0;
+      border-bottom: 1px solid #f1f5f9;
       font-size: 0.9rem;
     }
 
     .info-row:last-of-type {
       border-bottom: none;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .info-label {
       color: var(--text-muted);
       font-weight: 500;
+      font-size: 0.85rem;
     }
 
     .info-value {
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-main);
       text-align: right;
     }
 
     .badge {
       display: inline-block;
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 9999px;
       font-size: 0.75rem;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 12px;
+      letter-spacing: 0.06em;
+      margin-bottom: 14px;
     }
 
     .badge-valid {
@@ -232,8 +335,15 @@
     .footer {
       text-align: center;
       margin-top: 24px;
-      font-size: 0.75rem;
+      font-size: 0.76rem;
       color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
     }
 
     @keyframes spin {
@@ -241,32 +351,60 @@
         transform: rotate(360deg);
       }
     }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.9); }
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
+    <!-- Vizion Forge & Event Branding Banner -->
+    <div class="brand-banner">
+      <div class="brand-logo-wrap">
+        <!-- Official Vizion Forge VF Logo Vector -->
+        <svg width="34" height="34" viewBox="-6 -14.5 112 112" aria-hidden="true">
+          <defs>
+            <linearGradient id="vf-grad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#38bdf8" />
+              <stop offset="50%" stop-color="#1758c3" />
+              <stop offset="100%" stop-color="#8b5cf6" />
+            </linearGradient>
+          </defs>
+          <path d="M2 4C6 -1 16 -1 20 5C28 20 34 42 36 60C37 70 39 78 43 82C40 85 34 84 31 79L1 14C-1 10 -1 6 2 4Z" fill="url(#vf-grad)" />
+          <path d="M43 47C48 28 54 6 64 2L97 0C101 0 100 6 96 10C93 14 90 17 84 17L69 17L61 30L83 30C87 30 87 36 83 40C80 43 78 43 74 43L56 43C51 43 46 45 43 47Z" fill="url(#vf-grad)" />
+          <path d="M58 46C62 45 64 49 62 53L47 80C45 83 41 82 40 78C38 68 42 56 50 50C53 48 55 47 58 46Z" fill="url(#vf-grad)" />
+        </svg>
+      </div>
+      <div class="brand-org">Student Organisation Vizion Forge</div>
+      <div class="brand-lpu">Under the aegis of Division of Youth Affairs (DYA), Student Welfare Wing, LPU</div>
+    </div>
+
     <div class="card" id="main-card">
       <!-- Injected dynamically based on URL params -->
     </div>
+
     <div class="footer">
-      Hackathon Certificate Verification &amp; Distribution Portal
+      <strong>Code Fuzion: 24-Hour Hackathon</strong> · 20th–21st November<br>
+      Lovely Professional University, Phagwara
     </div>
   </div>
 
   <script>
     /* ==========================================================================
        CONFIG
-       Update these settings before deploying to GitHub Pages or production.
+       Connected to your deployed Google Apps Script & GitHub Pages.
        ========================================================================== */
     const CONFIG = {
-      // 1. The Web App URL deployed from Google Apps Script (Code.gs):
+      // 1. Google Apps Script Web App URL:
       APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbzDevVjYbeCubs8UXXGcFmTY1eq2UKXb3wHleeIpVoJk21F1auz0XSy7Ow6LCXFBARdLQ/exec',
 
-      // 2. The base URL of this hosted portal (used for verification links):
+      // 2. Base URL of this hosted portal:
       SITE_URL: 'https://forgevizion-blip.github.io/certificate-system/',
 
-      // 3. Certificate background image or PDF template (relative path):
+      // 3. Official High-Res Certificate Template Image:
       TEMPLATE_URL: 'certificate.png'
     };
 
@@ -302,16 +440,28 @@
     });
 
     /* ==========================================================================
-       VIEW 1: LOOKUP MODE (No ?id= in URL)
+       VIEW 1: LOOKUP & DOWNLOAD (No ?id= in URL)
        ========================================================================== */
     function renderLookupView() {
       const card = document.getElementById('main-card');
       card.innerHTML = '';
 
       const header = createElement('div', 'header');
-      header.appendChild(createElement('h1', '', 'Certificate Portal'));
-      header.appendChild(createElement('p', '', 'Enter your registration number to download your certificate'));
+      
+      const badge = createElement('div', 'event-badge');
+      badge.innerHTML = '<span class="dot"></span>24-Hour Hackathon Edition';
+      header.appendChild(badge);
+
+      const title = createElement('h1');
+      title.innerHTML = 'Code Fuzion &lt;/&gt;<span class="tagline">Certificate Portal</span>';
+      header.appendChild(title);
+
       card.appendChild(header);
+
+      // Event Status Notice
+      const notice = createElement('div', 'notice-box');
+      notice.innerHTML = '<strong>Official Certificate Registry:</strong> Enter your registration number to download your certificate. <em>(Note: Certificates apply to the 24-Hour Hackathon; mini-challenges are postponed).</em>';
+      card.appendChild(notice);
 
       const form = createElement('form', '');
       form.id = 'lookup-form';
@@ -324,7 +474,7 @@
       input.type = 'text';
       input.id = 'reg-input';
       input.name = 'reg';
-      input.placeholder = 'e.g. 00101';
+      input.placeholder = 'e.g. 101 or 00101';
       input.required = true;
       input.autocomplete = 'off';
 
@@ -332,7 +482,7 @@
       formGroup.appendChild(input);
       form.appendChild(formGroup);
 
-      const submitBtn = createElement('button', 'btn', 'Find Certificate');
+      const submitBtn = createElement('button', 'btn', 'Find My Certificate');
       submitBtn.type = 'submit';
       submitBtn.id = 'submit-btn';
       form.appendChild(submitBtn);
@@ -356,11 +506,11 @@
         resultArea.innerHTML = '';
 
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="spinner"></span>Searching...';
+        submitBtn.innerHTML = '<span class="spinner"></span>Searching Roster...';
 
         try {
-          if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
-            throw new Error('Please configure APPS_SCRIPT_URL at the top of index.html before searching.');
+          if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL.includes('YOUR_APPS_SCRIPT_URL')) {
+            throw new Error('Please configure APPS_SCRIPT_URL before searching.');
           }
 
           const fetchUrl = `${CONFIG.APPS_SCRIPT_URL}?action=lookup&reg=${encodeURIComponent(regVal)}`;
@@ -369,21 +519,21 @@
           const data = await res.json();
 
           if (data && data.found) {
-            showLookupResult(data);
+            showLookupResult(data, regVal);
           } else {
-            showError(`No certificate found for registration "${escapeText(regVal)}". Please verify your number.`);
+            showError(`No record found for registration "${escapeText(regVal)}". Please check your number or ensure you have completed the claim form.`);
           }
         } catch (err) {
           console.error(err);
-          showError(err.message || 'Unable to connect to certificate server. Please try again.');
+          showError(err.message || 'Unable to connect to certificate registry. Please try again.');
         } finally {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Find Certificate';
+          submitBtn.textContent = 'Find My Certificate';
         }
       });
     }
 
-    function showLookupResult(student) {
+    function showLookupResult(student, regNo) {
       const resultArea = document.getElementById('result-area');
       resultArea.innerHTML = '';
 
@@ -395,7 +545,7 @@
       box.appendChild(rowName);
 
       const rowTeam = createElement('div', 'info-row');
-      rowTeam.appendChild(createElement('span', 'info-label', 'Team'));
+      rowTeam.appendChild(createElement('span', 'info-label', 'Hackathon Team'));
       rowTeam.appendChild(createElement('span', 'info-value', student.team || 'N/A'));
       box.appendChild(rowTeam);
 
@@ -406,7 +556,7 @@
         box.appendChild(rowId);
       }
 
-      const downloadBtn = createElement('button', 'btn', 'Download PDF');
+      const downloadBtn = createElement('button', 'btn', 'Download Official PDF Certificate');
       downloadBtn.id = 'download-btn';
       downloadBtn.style.marginTop = '16px';
       downloadBtn.addEventListener('click', () => generateAndDownloadPdf(student, downloadBtn));
@@ -431,19 +581,15 @@
 
       const header = createElement('div', 'header');
       header.appendChild(createElement('h1', '', 'Certificate Verification'));
-      header.appendChild(createElement('p', '', `Checking ID: ${escapeText(id)}`));
+      header.appendChild(createElement('p', '', `Registry ID: ${escapeText(id)}`));
       card.appendChild(header);
 
       const loadingBox = createElement('div', 'status-box', '');
-      loadingBox.innerHTML = '<span class="spinner" style="border-top-color: var(--primary); border-color: rgba(79,70,229,0.2);"></span> Verifying certificate...';
+      loadingBox.innerHTML = '<span class="spinner" style="border-top-color: var(--primary); border-color: rgba(23,88,195,0.2);"></span> Verifying with Code Fuzion registry...';
       loadingBox.style.textAlign = 'center';
       card.appendChild(loadingBox);
 
       try {
-        if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
-          throw new Error('Please configure APPS_SCRIPT_URL at the top of index.html before verifying.');
-        }
-
         const verifyUrl = `${CONFIG.APPS_SCRIPT_URL}?action=verify&id=${encodeURIComponent(id)}`;
         const res = await fetch(verifyUrl);
         if (!res.ok) throw new Error(`Server returned HTTP ${res.status}`);
@@ -452,15 +598,20 @@
         loadingBox.remove();
 
         if (data && data.valid) {
-          const badge = createElement('div', 'badge badge-valid', 'Valid Certificate');
+          const badge = createElement('div', 'badge badge-valid', '✓ Authentic Certificate');
           card.appendChild(badge);
 
           const resultCard = createElement('div', 'result-card', '');
           resultCard.style.borderTop = 'none';
           resultCard.style.paddingTop = '0';
 
+          const rowEvent = createElement('div', 'info-row');
+          rowEvent.appendChild(createElement('span', 'info-label', 'Event'));
+          rowEvent.appendChild(createElement('span', 'info-value', 'Code Fuzion: 24H Hackathon'));
+          resultCard.appendChild(rowEvent);
+
           const rowName = createElement('div', 'info-row');
-          rowName.appendChild(createElement('span', 'info-label', 'Student Name'));
+          rowName.appendChild(createElement('span', 'info-label', 'Participant'));
           rowName.appendChild(createElement('span', 'info-value', data.name || 'N/A'));
           resultCard.appendChild(rowName);
 
@@ -476,13 +627,14 @@
 
           card.appendChild(resultCard);
 
-          const successNotice = createElement('div', 'status-box status-success', 'This certificate is authentic and officially issued.');
+          const successNotice = createElement('div', 'status-box status-success');
+          successNotice.innerHTML = '<strong>Officially Issued:</strong> Issued by Student Organisation Vizion Forge under the aegis of Division of Youth Affairs (DYA), Student Welfare Wing, LPU.';
           card.appendChild(successNotice);
         } else {
-          const badge = createElement('div', 'badge badge-invalid', 'Not Valid');
+          const badge = createElement('div', 'badge badge-invalid', '✗ Invalid Certificate');
           card.appendChild(badge);
 
-          const errBox = createElement('div', 'status-box status-error', `No active certificate was found with ID: ${escapeText(id)}.`);
+          const errBox = createElement('div', 'status-box status-error', `No active certificate was found in the official registry matching ID: ${escapeText(id)}.`);
           card.appendChild(errBox);
         }
       } catch (err) {
@@ -492,13 +644,13 @@
         card.appendChild(errBox);
       }
 
-      const backBtn = createElement('a', 'btn btn-secondary', 'Back to Portal');
+      const backBtn = createElement('a', 'btn btn-secondary', '← Back to Registry Search');
       backBtn.href = window.location.pathname;
       card.appendChild(backBtn);
     }
 
     /* ==========================================================================
-       PDF GENERATION ENGINE (pdf-lib)
+       PDF GENERATION ENGINE (pdf-lib with High-Res Template)
        ========================================================================== */
     async function loadTemplate(PDFDocument, targetUrl) {
       const candidates = targetUrl ? [targetUrl] : ['certificate.png', 'certificate.jpg'];
@@ -510,11 +662,8 @@
           const buffer = await res.arrayBuffer();
           const u8 = new Uint8Array(buffer);
 
-          // PNG Header: 89 50 4E 47
           const isPng = u8[0] === 0x89 && u8[1] === 0x50 && u8[2] === 0x4E && u8[3] === 0x47;
-          // JPEG Header: FF D8 FF
           const isJpg = u8[0] === 0xFF && u8[1] === 0xD8 && u8[2] === 0xFF;
-          // PDF Header: %PDF (25 50 44 46)
           const isPdf = u8[0] === 0x25 && u8[1] === 0x50 && u8[2] === 0x44 && u8[3] === 0x46;
 
           if (isPng || isJpg) {
@@ -559,148 +708,93 @@
           height = templateInfo.height;
           isImage = templateInfo.isImage;
         } else {
-          // Fallback: Create clean vector certificate
+          // Fallback clean canvas
           pdfDoc = await PDFDocument.create();
-          page = pdfDoc.addPage([842, 595]); // A4 Landscape
+          page = pdfDoc.addPage([842, 595]);
           const size = page.getSize();
           width = size.width;
           height = size.height;
           isImage = false;
-
-          // Double border
-          page.drawRectangle({
-            x: 24,
-            y: 24,
-            width: width - 48,
-            height: height - 48,
-            borderColor: rgb(0.12, 0.16, 0.28),
-            borderWidth: 2,
-            color: rgb(0.99, 0.99, 1.0)
-          });
-          page.drawRectangle({
-            x: 32,
-            y: 32,
-            width: width - 64,
-            height: height - 64,
-            borderColor: rgb(0.78, 0.82, 0.88),
-            borderWidth: 1
-          });
         }
 
         const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
         const fontRegular = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
-        // Responsive font scaling based on canvas width
+        // Responsive font scaling relative to A4 Landscape baseline
         const scale = width / 842;
 
-        if (!templateInfo) {
-          // Default vector headers
-          const title = 'CERTIFICATE OF PARTICIPATION';
-          const titleSize = Math.round(26 * scale);
-          const titleWidth = fontBold.widthOfTextAtSize(title, titleSize);
-          page.drawText(title, {
-            x: (width - titleWidth) / 2,
-            y: height - 100 * scale,
-            size: titleSize,
-            font: fontBold,
-            color: rgb(0.12, 0.16, 0.28)
-          });
-
-          const subtitle = 'This certificate is proudly presented to';
-          const subSize = Math.round(14 * scale);
-          const subWidth = fontRegular.widthOfTextAtSize(subtitle, subSize);
-          page.drawText(subtitle, {
-            x: (width - subWidth) / 2,
-            y: height - 150 * scale,
-            size: subSize,
-            font: fontRegular,
-            color: rgb(0.42, 0.48, 0.55)
-          });
-        }
-
-        // Student Name
-        const studentName = student.name || 'Participant';
-        const nameSize = Math.round(32 * scale);
-        const nameWidth = fontBold.widthOfTextAtSize(studentName, nameSize);
+        // Position coordinates for high-res themed certificate.png
+        // (y-up coordinate system: height - y_image)
         const nameY = height * 0.54;
+        const studentName = student.name || 'Participant';
+        const nameSize = Math.round(34 * scale);
+        const nameWidth = fontBold.widthOfTextAtSize(studentName, nameSize);
 
+        // 1. Participant Name (Brand Blue)
         page.drawText(studentName, {
           x: (width - nameWidth) / 2,
           y: nameY,
           size: nameSize,
           font: fontBold,
-          color: rgb(0.12, 0.2, 0.55)
+          color: rgb(0.09, 0.35, 0.76) // #1758c3
         });
 
-        // Underline
-        const lineMargin = 30 * scale;
+        // 2. Underline (Gold Accent)
+        const lineMargin = 32 * scale;
         page.drawLine({
-          start: { x: Math.max(60, (width - nameWidth) / 2 - lineMargin), y: nameY - 8 * scale },
-          end: { x: Math.min(width - 60, (width + nameWidth) / 2 + lineMargin), y: nameY - 8 * scale },
-          thickness: Math.max(1, 1.5 * scale),
-          color: rgb(0.75, 0.8, 0.88)
+          start: { x: Math.max(60 * scale, (width - nameWidth) / 2 - lineMargin), y: nameY - 8 * scale },
+          end: { x: Math.min(width - 60 * scale, (width + nameWidth) / 2 + lineMargin), y: nameY - 8 * scale },
+          thickness: Math.max(1.5, 2 * scale),
+          color: rgb(0.85, 0.47, 0.02) // #d97706 Gold
         });
 
-        // Team Recognition
+        // 3. Team Recognition
         if (student.team) {
           const teamText = `Team: ${student.team}`;
-          const teamSize = Math.round(16 * scale);
-          const teamWidth = fontRegular.widthOfTextAtSize(teamText, teamSize);
+          const teamSize = Math.round(18 * scale);
+          const teamWidth = fontBold.widthOfTextAtSize(teamText, teamSize);
           page.drawText(teamText, {
             x: (width - teamWidth) / 2,
-            y: nameY - 45 * scale,
+            y: nameY - 48 * scale,
             size: teamSize,
-            font: fontRegular,
-            color: rgb(0.2, 0.25, 0.3)
+            font: fontBold,
+            color: rgb(0.06, 0.09, 0.16) // #0f172a
           });
         }
 
-        if (!templateInfo) {
-          const desc = 'in recognition of valuable contribution and active participation in the Hackathon.';
-          const descSize = Math.round(13 * scale);
-          const descWidth = fontRegular.widthOfTextAtSize(desc, descSize);
-          page.drawText(desc, {
-            x: (width - descWidth) / 2,
-            y: nameY - 80 * scale,
-            size: descSize,
-            font: fontRegular,
-            color: rgb(0.4, 0.45, 0.5)
-          });
-        }
-
-        // Bottom Left: Certificate ID
+        // 4. Bottom-Left: Certificate ID
         const certIdText = `Certificate ID: ${student.id || 'N/A'}`;
-        const metaSize = Math.round(10 * scale);
+        const metaSize = Math.round(11 * scale);
         page.drawText(certIdText, {
-          x: 40 * scale,
-          y: 40 * scale,
+          x: 44 * scale,
+          y: 44 * scale,
           size: metaSize,
-          font: fontRegular,
-          color: rgb(0.45, 0.5, 0.55)
+          font: fontBold,
+          color: rgb(0.35, 0.42, 0.52)
         });
 
-        // Bottom Right: Verification Link
+        // 5. Bottom-Right: Verification URL
         const verifyBase = CONFIG.SITE_URL || window.location.href.split('?')[0];
         const verifyUrl = `${verifyBase}${verifyBase.includes('?') ? '&' : '?'}id=${encodeURIComponent(student.id || '')}`;
         const verifyText = `Verify authenticity: ${verifyUrl}`;
-        const verifySize = Math.round(9 * scale);
+        const verifySize = Math.round(9.5 * scale);
         const verifyWidth = fontRegular.widthOfTextAtSize(verifyText, verifySize);
         page.drawText(verifyText, {
-          x: Math.max(40 * scale, width - verifyWidth - 40 * scale),
-          y: 40 * scale,
+          x: Math.max(44 * scale, width - verifyWidth - 44 * scale),
+          y: 44 * scale,
           size: verifySize,
           font: fontRegular,
-          color: rgb(0.45, 0.5, 0.55)
+          color: rgb(0.35, 0.42, 0.52)
         });
 
-        // Trigger Download
+        // Download Action
         const pdfBytes = await pdfDoc.save();
         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
         const downloadUrl = URL.createObjectURL(blob);
         const downloadAnchor = document.createElement('a');
         const safeFilename = (student.name || 'Certificate').replace(/[^a-zA-Z0-9_-]/g, '_');
         downloadAnchor.href = downloadUrl;
-        downloadAnchor.download = `Certificate_${safeFilename}.pdf`;
+        downloadAnchor.download = `Code_Fuzion_Certificate_${safeFilename}.pdf`;
         document.body.appendChild(downloadAnchor);
         downloadAnchor.click();
         document.body.removeChild(downloadAnchor);
