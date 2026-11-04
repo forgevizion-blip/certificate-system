@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Code Fuzion — 24 Hour Hackathon | Certificate Registry</title>
+  <title>Code Fuzion — 24-Hour Hackathon | Certificate Registry</title>
   <!-- pdf-lib library -->
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <style>
@@ -11,6 +11,7 @@
       --bg: #f8fafc;
       --card-bg: #ffffff;
       --border: #e2e8f0;
+      --border-focus: #1758c3;
       --text-main: #0f172a;
       --text-muted: #64748b;
       --primary: #1758c3;
@@ -18,6 +19,7 @@
       --primary-text: #ffffff;
       --accent-gold: #d97706;
       --accent-gold-bg: #fef3c7;
+      --accent-gold-border: #fde68a;
       --success-bg: #ecfdf5;
       --success-border: #a7f3d0;
       --success-text: #065f46;
@@ -25,6 +27,7 @@
       --error-border: #fecaca;
       --error-text: #991b1b;
       --radius: 16px;
+      --radius-sm: 10px;
       --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
@@ -47,45 +50,46 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px 16px;
+      padding: 28px 16px;
       line-height: 1.5;
     }
 
     .container {
       width: 100%;
-      max-width: 520px;
+      max-width: 660px;
+      margin: 0 auto;
     }
 
     /* Brand Header */
     .brand-banner {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .brand-logo-wrap {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 56px;
-      height: 56px;
+      width: 58px;
+      height: 58px;
       background: #ffffff;
       border: 1px solid var(--border);
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(23, 88, 195, 0.1);
+      box-shadow: 0 4px 14px rgba(23, 88, 195, 0.12);
       margin-bottom: 12px;
     }
 
     .brand-org {
-      font-size: 0.75rem;
-      font-weight: 700;
+      font-size: 0.76rem;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.09em;
       color: var(--primary);
       margin-bottom: 4px;
     }
 
     .brand-lpu {
-      font-size: 0.72rem;
+      font-size: 0.73rem;
       color: var(--text-muted);
       font-weight: 500;
       margin-bottom: 8px;
@@ -119,11 +123,11 @@
     .event-badge {
       display: inline-flex;
       align-items: center;
-      padding: 4px 12px;
+      padding: 4px 14px;
       background: #eff6ff;
       border: 1px solid #bfdbfe;
       border-radius: 9999px;
-      font-size: 0.72rem;
+      font-size: 0.73rem;
       font-weight: 700;
       color: var(--primary);
       text-transform: uppercase;
@@ -145,7 +149,7 @@
       font-weight: 800;
       color: var(--text-main);
       letter-spacing: -0.03em;
-      line-height: 1.2;
+      line-height: 1.25;
     }
 
     .header h1 span.tagline {
@@ -161,13 +165,13 @@
     .notice-box {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
-      border-left: 3px solid #f59e0b;
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-size: 0.78rem;
+      border-left: 4px solid #f59e0b;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
       color: #475569;
-      line-height: 1.45;
-      margin-bottom: 20px;
+      line-height: 1.5;
+      margin-bottom: 22px;
     }
 
     .form-group {
@@ -176,25 +180,26 @@
 
     label {
       display: block;
-      font-size: 0.85rem;
+      font-size: 0.86rem;
       font-weight: 600;
       margin-bottom: 8px;
       color: var(--text-main);
     }
 
-    input[type="text"] {
+    input[type="text"], input[type="email"] {
       width: 100%;
       padding: 12px 14px;
       font-size: 0.98rem;
       font-family: inherit;
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
       outline: none;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
       background: #ffffff;
+      color: var(--text-main);
     }
 
-    input[type="text"]:focus {
+    input[type="text"]:focus, input[type="email"]:focus {
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(23, 88, 195, 0.15);
     }
@@ -203,34 +208,40 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      padding: 13px 20px;
-      font-size: 0.95rem;
+      padding: 12px 18px;
+      font-size: 0.92rem;
       font-weight: 700;
       font-family: inherit;
       color: var(--primary-text);
       background-color: var(--primary);
       border: none;
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
       cursor: pointer;
-      transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+      transition: all 0.15s ease;
       text-decoration: none;
-      box-shadow: 0 4px 12px rgba(23, 88, 195, 0.25);
+      box-shadow: 0 4px 12px rgba(23, 88, 195, 0.22);
+      white-space: nowrap;
     }
 
     .btn:hover:not(:disabled) {
       background-color: var(--primary-hover);
-      box-shadow: 0 6px 16px rgba(23, 88, 195, 0.35);
+      box-shadow: 0 6px 16px rgba(23, 88, 195, 0.32);
+      transform: translateY(-1px);
     }
 
     .btn:active:not(:disabled) {
-      transform: scale(0.99);
+      transform: translateY(0);
     }
 
     .btn:disabled {
       opacity: 0.65;
       cursor: not-allowed;
       box-shadow: none;
+      transform: none;
+    }
+
+    .btn-block {
+      width: 100%;
     }
 
     .btn-secondary {
@@ -238,7 +249,6 @@
       color: var(--text-main);
       border: 1px solid var(--border);
       box-shadow: none;
-      margin-top: 14px;
     }
 
     .btn-secondary:hover:not(:disabled) {
@@ -246,11 +256,29 @@
       box-shadow: none;
     }
 
+    .btn-gold {
+      background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25);
+    }
+
+    .btn-gold:hover:not(:disabled) {
+      background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+      box-shadow: 0 6px 16px rgba(217, 119, 6, 0.35);
+    }
+
+    .btn-sm {
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      border-radius: 8px;
+    }
+
     .status-box {
-      margin-top: 20px;
+      margin-top: 18px;
       padding: 14px 16px;
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
       font-size: 0.88rem;
+      line-height: 1.45;
     }
 
     .status-success {
@@ -265,30 +293,45 @@
       color: var(--error-text);
     }
 
-    .result-card {
+    .status-info {
+      background-color: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+    }
+
+    /* Result View Components */
+    .result-section {
       margin-top: 24px;
       border-top: 1px dashed var(--border);
-      padding-top: 20px;
+      padding-top: 22px;
+    }
+
+    .profile-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-bottom: 20px;
     }
 
     .info-row {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      padding: 9px 0;
-      border-bottom: 1px solid #f1f5f9;
+      padding: 7px 0;
+      border-bottom: 1px solid #eef2f6;
       font-size: 0.9rem;
     }
 
-    .info-row:last-of-type {
+    .info-row:last-child {
       border-bottom: none;
-      margin-bottom: 18px;
+      padding-bottom: 0;
     }
 
     .info-label {
       color: var(--text-muted);
       font-weight: 500;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
     }
 
     .info-value {
@@ -297,15 +340,160 @@
       text-align: right;
     }
 
-    .badge {
-      display: inline-block;
-      padding: 5px 12px;
+    /* Email Delivery Box */
+    .email-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 22px;
+    }
+
+    .email-box-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .email-box-desc {
+      font-size: 0.8rem;
+      color: #475569;
+      margin-bottom: 14px;
+      line-height: 1.45;
+    }
+
+    .email-form-row {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 580px) {
+      .email-form-row {
+        flex-direction: column;
+      }
+    }
+
+    /* Bulk actions row */
+    .actions-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+
+    .actions-bar .btn {
+      flex: 1 1 calc(50% - 5px);
+      min-width: 200px;
+    }
+
+    /* Certificates List */
+    .cert-list-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cert-list-count {
+      background: var(--accent-gold-bg);
+      color: var(--accent-gold);
+      border: 1px solid var(--accent-gold-border);
+      padding: 2px 8px;
       border-radius: 9999px;
       font-size: 0.75rem;
       font-weight: 800;
+    }
+
+    .cert-item {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .cert-item:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+    }
+
+    .cert-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .cert-item-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--primary);
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-bottom: 4px;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      margin-bottom: 14px;
+    }
+
+    .cert-item-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .cert-item-id {
+      font-size: 0.78rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: var(--text-muted);
+      word-break: break-all;
+    }
+
+    .cert-item-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 580px) {
+      .cert-item {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .cert-item-actions {
+        justify-content: stretch;
+      }
+      .cert-item-actions .btn {
+        flex: 1;
+      }
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
     }
 
     .badge-valid {
@@ -332,12 +520,17 @@
       vertical-align: middle;
     }
 
+    .spinner-dark {
+      border-color: rgba(23, 88, 195, 0.2);
+      border-top-color: var(--primary);
+    }
+
     .footer {
       text-align: center;
-      margin-top: 24px;
-      font-size: 0.76rem;
+      margin-top: 26px;
+      font-size: 0.77rem;
       color: var(--text-muted);
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     .footer a {
@@ -347,9 +540,7 @@
     }
 
     @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
+      to { transform: rotate(360deg); }
     }
 
     @keyframes pulse {
@@ -361,10 +552,9 @@
 <body>
 
   <div class="container">
-    <!-- Vizion Forge & Event Branding Banner -->
+    <!-- Vizion Forge Branding Banner -->
     <div class="brand-banner">
       <div class="brand-logo-wrap">
-        <!-- Official Vizion Forge VF Logo Vector -->
         <svg width="34" height="34" viewBox="-6 -14.5 112 112" aria-hidden="true">
           <defs>
             <linearGradient id="vf-grad" x1="0" y1="0" x2="1" y2="1">
@@ -382,20 +572,21 @@
       <div class="brand-lpu">Under the aegis of Division of Youth Affairs (DYA), Student Welfare Wing, LPU</div>
     </div>
 
+    <!-- Main Dynamic Card -->
     <div class="card" id="main-card">
       <!-- Injected dynamically based on URL params -->
     </div>
 
     <div class="footer">
       <strong>Code Fuzion: 24-Hour Hackathon</strong> · 20th–21st November<br>
-      Lovely Professional University, Phagwara
+      Lovely Professional University, Phagwara, Punjab
     </div>
   </div>
 
   <script>
     /* ==========================================================================
        CONFIG
-       Connected to your deployed Google Apps Script & GitHub Pages.
+       Connected to Google Apps Script & GitHub Pages.
        ========================================================================== */
     const CONFIG = {
       // 1. Google Apps Script Web App URL:
@@ -405,11 +596,20 @@
       SITE_URL: 'https://forgevizion-blip.github.io/certificate-system/',
 
       // 3. Official High-Res Certificate Template Image:
-      TEMPLATE_URL: 'certificate.png'
+      TEMPLATE_URL: 'certificate.png',
+
+      // 4. Default 5 Certificate Names:
+      CERTIFICATES: [
+        { number: 1, title: 'Certificate 1' },
+        { number: 2, title: 'Certificate 2' },
+        { number: 3, title: 'Certificate 3' },
+        { number: 4, title: 'Certificate 4' },
+        { number: 5, title: 'Certificate 5' }
+      ]
     };
 
     /* ==========================================================================
-       UTILITIES & SECURITY
+       DOM UTILITIES & HELPERS
        ========================================================================== */
     function escapeText(str) {
       if (str === null || str === undefined) return '';
@@ -423,6 +623,19 @@
         el.textContent = String(textContent);
       }
       return el;
+    }
+
+    function blobToBase64(blob) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const res = reader.result;
+          const base64 = res.split(',')[1] || '';
+          resolve(base64);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
     }
 
     /* ==========================================================================
@@ -440,27 +653,24 @@
     });
 
     /* ==========================================================================
-       VIEW 1: LOOKUP & DOWNLOAD (No ?id= in URL)
+       VIEW 1: LOOKUP & CERTIFICATES VIEW (No ?id= in URL)
        ========================================================================== */
     function renderLookupView() {
       const card = document.getElementById('main-card');
       card.innerHTML = '';
 
       const header = createElement('div', 'header');
-      
       const badge = createElement('div', 'event-badge');
       badge.innerHTML = '<span class="dot"></span>24-Hour Hackathon Edition';
       header.appendChild(badge);
 
       const title = createElement('h1');
-      title.innerHTML = 'Code Fuzion &lt;/&gt;<span class="tagline">Certificate Portal</span>';
+      title.innerHTML = 'Code Fuzion &lt;/&gt;<span class="tagline">Official Certificate Portal</span>';
       header.appendChild(title);
-
       card.appendChild(header);
 
-      // Event Status Notice
       const notice = createElement('div', 'notice-box');
-      notice.innerHTML = '<strong>Official Certificate Registry:</strong> Enter your registration number to download your certificate. <em>(Note: Certificates apply to the 24-Hour Hackathon; mini-challenges are postponed).</em>';
+      notice.innerHTML = '<strong>5 Official Certificates Available:</strong> Enter your registration number to download your complete set of 5 event certificates or mail them directly to your email address.';
       card.appendChild(notice);
 
       const form = createElement('form', '');
@@ -482,7 +692,7 @@
       formGroup.appendChild(input);
       form.appendChild(formGroup);
 
-      const submitBtn = createElement('button', 'btn', 'Find My Certificate');
+      const submitBtn = createElement('button', 'btn btn-block', 'Find My Certificates');
       submitBtn.type = 'submit';
       submitBtn.id = 'submit-btn';
       form.appendChild(submitBtn);
@@ -509,8 +719,8 @@
         submitBtn.innerHTML = '<span class="spinner"></span>Searching Roster...';
 
         try {
-          if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL.includes('YOUR_APPS_SCRIPT_URL')) {
-            throw new Error('Please configure APPS_SCRIPT_URL before searching.');
+          if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL.includes('YOUR_DEPLOYMENT_ID')) {
+            throw new Error('Please configure APPS_SCRIPT_URL in index.html before searching.');
           }
 
           const fetchUrl = `${CONFIG.APPS_SCRIPT_URL}?action=lookup&reg=${encodeURIComponent(regVal)}`;
@@ -521,14 +731,14 @@
           if (data && data.found) {
             showLookupResult(data, regVal);
           } else {
-            showError(`No record found for registration "${escapeText(regVal)}". Please check your number or ensure you have completed the claim form.`);
+            showError(`No record found for registration "${escapeText(regVal)}". Please check your registration number.`);
           }
         } catch (err) {
           console.error(err);
           showError(err.message || 'Unable to connect to certificate registry. Please try again.');
         } finally {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Find My Certificate';
+          submitBtn.textContent = 'Find My Certificates';
         }
       });
     }
@@ -537,32 +747,148 @@
       const resultArea = document.getElementById('result-area');
       resultArea.innerHTML = '';
 
-      const box = createElement('div', 'result-card');
+      const section = createElement('div', 'result-section');
 
+      // 1. Participant Details Box
+      const profile = createElement('div', 'profile-card');
       const rowName = createElement('div', 'info-row');
-      rowName.appendChild(createElement('span', 'info-label', 'Student Name'));
-      rowName.appendChild(createElement('span', 'info-value', student.name || 'N/A'));
-      box.appendChild(rowName);
+      rowName.appendChild(createElement('span', 'info-label', 'Participant Name'));
+      rowName.appendChild(createElement('span', 'info-value', student.name || 'Participant'));
+      profile.appendChild(rowName);
 
       const rowTeam = createElement('div', 'info-row');
       rowTeam.appendChild(createElement('span', 'info-label', 'Hackathon Team'));
       rowTeam.appendChild(createElement('span', 'info-value', student.team || 'N/A'));
-      box.appendChild(rowTeam);
+      profile.appendChild(rowTeam);
 
-      if (student.id) {
-        const rowId = createElement('div', 'info-row');
-        rowId.appendChild(createElement('span', 'info-label', 'Certificate ID'));
-        rowId.appendChild(createElement('span', 'info-value', student.id));
-        box.appendChild(rowId);
-      }
+      const rowReg = createElement('div', 'info-row');
+      rowReg.appendChild(createElement('span', 'info-label', 'Registration No.'));
+      rowReg.appendChild(createElement('span', 'info-value', student.reg || regNo));
+      profile.appendChild(rowReg);
+      section.appendChild(profile);
 
-      const downloadBtn = createElement('button', 'btn', 'Download Official PDF Certificate');
-      downloadBtn.id = 'download-btn';
-      downloadBtn.style.marginTop = '16px';
-      downloadBtn.addEventListener('click', () => generateAndDownloadPdf(student, downloadBtn));
+      // Normalize certificates list (5 items)
+      const certList = (student.certificates && student.certificates.length)
+        ? student.certificates
+        : CONFIG.CERTIFICATES.map(c => ({
+            number: c.number,
+            title: c.title,
+            id: student.id ? `${student.id}-C${c.number}` : `CF-${regNo}-C${c.number}`
+          }));
 
-      box.appendChild(downloadBtn);
-      resultArea.appendChild(box);
+      // 2. Email Delivery Box
+      const emailBox = createElement('div', 'email-box');
+      const emailTitle = createElement('div', 'email-box-title');
+      emailTitle.innerHTML = '✉️ Mail Certificates to Your Inbox';
+      emailBox.appendChild(emailTitle);
+
+      const emailDesc = createElement('div', 'email-box-desc');
+      emailDesc.textContent = 'Confirm or enter your email address below to receive all 5 official PDF certificates directly:';
+      emailBox.appendChild(emailDesc);
+
+      const emailFormRow = createElement('div', 'email-form-row');
+      const emailInput = document.createElement('input');
+      emailInput.type = 'email';
+      emailInput.id = 'participant-email';
+      emailInput.placeholder = 'your.name@example.com';
+      emailInput.value = student.email || '';
+      emailInput.required = true;
+
+      const emailAllBtn = createElement('button', 'btn btn-gold', '📧 Email All 5 Certificates');
+      emailAllBtn.id = 'email-all-btn';
+
+      emailFormRow.appendChild(emailInput);
+      emailFormRow.appendChild(emailAllBtn);
+      emailBox.appendChild(emailFormRow);
+
+      const emailFeedback = createElement('div', '');
+      emailFeedback.id = 'email-feedback';
+      emailBox.appendChild(emailFeedback);
+
+      section.appendChild(emailBox);
+
+      // 3. Quick Actions (Download All)
+      const actionsBar = createElement('div', 'actions-bar');
+      const downloadAllBtn = createElement('button', 'btn btn-secondary', '⬇️ Download All 5 Certificates (.pdf)');
+      downloadAllBtn.id = 'download-all-btn';
+      actionsBar.appendChild(downloadAllBtn);
+      section.appendChild(actionsBar);
+
+      // 4. Certificates List Header
+      const listHeader = createElement('div', 'cert-list-title');
+      listHeader.appendChild(createElement('span', '', 'Your 5 Official Certificates'));
+      const countBadge = createElement('span', 'cert-list-count', `${certList.length} Certificates`);
+      listHeader.appendChild(countBadge);
+      section.appendChild(listHeader);
+
+      // 5. Individual Certificate Cards
+      const certCardsContainer = createElement('div', '');
+      certCardsContainer.id = 'cert-cards-container';
+
+      certList.forEach((cert, idx) => {
+        const item = createElement('div', 'cert-item');
+
+        const itemInfo = createElement('div', 'cert-item-info');
+        const badgeSpan = createElement('span', 'cert-item-badge', `Certificate ${cert.number || idx + 1}`);
+        itemInfo.appendChild(badgeSpan);
+
+        const itemTitle = createElement('div', 'cert-item-title', cert.title || `Certificate ${idx + 1}`);
+        itemInfo.appendChild(itemTitle);
+
+        const itemId = createElement('div', 'cert-item-id', `ID: ${cert.id || 'N/A'}`);
+        itemInfo.appendChild(itemId);
+        item.appendChild(itemInfo);
+
+        const actions = createElement('div', 'cert-item-actions');
+
+        // Single Download Button
+        const singleDlBtn = createElement('button', 'btn btn-sm btn-secondary', '⬇️ Download');
+        singleDlBtn.addEventListener('click', () => {
+          generateAndDownloadSinglePdf(student, cert, singleDlBtn);
+        });
+        actions.appendChild(singleDlBtn);
+
+        // Single Email Button
+        const singleEmailBtn = createElement('button', 'btn btn-sm btn-gold', '✉️ Email');
+        singleEmailBtn.addEventListener('click', () => {
+          const emailVal = emailInput.value.trim();
+          if (!emailVal || !emailVal.includes('@')) {
+            alert('Please enter a valid email address in the email field above.');
+            emailInput.focus();
+            return;
+          }
+          sendCertificatesViaEmail(student, [cert], emailVal, singleEmailBtn, emailFeedback);
+        });
+        actions.appendChild(singleEmailBtn);
+
+        // Verification Link Button
+        const verifyBtn = createElement('a', 'btn btn-sm btn-secondary', '🔍 Verify');
+        verifyBtn.href = `?id=${encodeURIComponent(cert.id || '')}`;
+        verifyBtn.target = '_blank';
+        actions.appendChild(verifyBtn);
+
+        item.appendChild(actions);
+        certCardsContainer.appendChild(item);
+      });
+
+      section.appendChild(certCardsContainer);
+      resultArea.appendChild(section);
+
+      // Event: Download All
+      downloadAllBtn.addEventListener('click', () => {
+        downloadAllCertificates(student, certList, downloadAllBtn);
+      });
+
+      // Event: Email All 5
+      emailAllBtn.addEventListener('click', () => {
+        const emailVal = emailInput.value.trim();
+        if (!emailVal || !emailVal.includes('@')) {
+          showEmailStatus(emailFeedback, 'error', 'Please enter a valid email address to receive your certificates.');
+          emailInput.focus();
+          return;
+        }
+        sendCertificatesViaEmail(student, certList, emailVal, emailAllBtn, emailFeedback);
+      });
     }
 
     function showError(msg) {
@@ -570,6 +896,13 @@
       messageArea.innerHTML = '';
       const errBox = createElement('div', 'status-box status-error', msg);
       messageArea.appendChild(errBox);
+    }
+
+    function showEmailStatus(container, type, message) {
+      container.innerHTML = '';
+      const box = createElement('div', `status-box status-${type}`, message);
+      box.style.marginTop = '12px';
+      container.appendChild(box);
     }
 
     /* ==========================================================================
@@ -584,8 +917,8 @@
       header.appendChild(createElement('p', '', `Registry ID: ${escapeText(id)}`));
       card.appendChild(header);
 
-      const loadingBox = createElement('div', 'status-box', '');
-      loadingBox.innerHTML = '<span class="spinner" style="border-top-color: var(--primary); border-color: rgba(23,88,195,0.2);"></span> Verifying with Code Fuzion registry...';
+      const loadingBox = createElement('div', 'status-box status-info', '');
+      loadingBox.innerHTML = '<span class="spinner spinner-dark"></span> Verifying certificate authenticity with Code Fuzion registry...';
       loadingBox.style.textAlign = 'center';
       card.appendChild(loadingBox);
 
@@ -601,22 +934,25 @@
           const badge = createElement('div', 'badge badge-valid', '✓ Authentic Certificate');
           card.appendChild(badge);
 
-          const resultCard = createElement('div', 'result-card', '');
-          resultCard.style.borderTop = 'none';
-          resultCard.style.paddingTop = '0';
+          const resultCard = createElement('div', 'profile-card', '');
 
           const rowEvent = createElement('div', 'info-row');
           rowEvent.appendChild(createElement('span', 'info-label', 'Event'));
           rowEvent.appendChild(createElement('span', 'info-value', 'Code Fuzion: 24H Hackathon'));
           resultCard.appendChild(rowEvent);
 
+          const rowCertType = createElement('div', 'info-row');
+          rowCertType.appendChild(createElement('span', 'info-label', 'Certificate Type'));
+          rowCertType.appendChild(createElement('span', 'info-value', data.certificateTitle || `Certificate ${data.certificateNumber || '1'}`));
+          resultCard.appendChild(rowCertType);
+
           const rowName = createElement('div', 'info-row');
-          rowName.appendChild(createElement('span', 'info-label', 'Participant'));
+          rowName.appendChild(createElement('span', 'info-label', 'Participant Name'));
           rowName.appendChild(createElement('span', 'info-value', data.name || 'N/A'));
           resultCard.appendChild(rowName);
 
           const rowTeam = createElement('div', 'info-row');
-          rowTeam.appendChild(createElement('span', 'info-label', 'Team'));
+          rowTeam.appendChild(createElement('span', 'info-label', 'Hackathon Team'));
           rowTeam.appendChild(createElement('span', 'info-value', data.team || 'N/A'));
           resultCard.appendChild(rowTeam);
 
@@ -627,14 +963,28 @@
 
           card.appendChild(resultCard);
 
+          // Download Verified PDF Button
+          const dlBtn = createElement('button', 'btn btn-block', '⬇️ Download Official Verified PDF');
+          dlBtn.style.marginTop = '16px';
+          dlBtn.addEventListener('click', () => {
+            const studentObj = { name: data.name, team: data.team };
+            const certObj = {
+              number: data.certificateNumber || 1,
+              title: data.certificateTitle || 'Certificate',
+              id: id
+            };
+            generateAndDownloadSinglePdf(studentObj, certObj, dlBtn);
+          });
+          card.appendChild(dlBtn);
+
           const successNotice = createElement('div', 'status-box status-success');
-          successNotice.innerHTML = '<strong>Officially Issued:</strong> Issued by Student Organisation Vizion Forge under the aegis of Division of Youth Affairs (DYA), Student Welfare Wing, LPU.';
+          successNotice.innerHTML = '<strong>Officially Issued:</strong> Verified by Student Organisation Vizion Forge under the aegis of Division of Youth Affairs (DYA), Student Welfare Wing, LPU.';
           card.appendChild(successNotice);
         } else {
           const badge = createElement('div', 'badge badge-invalid', '✗ Invalid Certificate');
           card.appendChild(badge);
 
-          const errBox = createElement('div', 'status-box status-error', `No active certificate was found in the official registry matching ID: ${escapeText(id)}.`);
+          const errBox = createElement('div', 'status-box status-error', `No active certificate was found matching Registry ID: ${escapeText(id)}.`);
           card.appendChild(errBox);
         }
       } catch (err) {
@@ -644,13 +994,14 @@
         card.appendChild(errBox);
       }
 
-      const backBtn = createElement('a', 'btn btn-secondary', '← Back to Registry Search');
+      const backBtn = createElement('a', 'btn btn-secondary btn-block', '← Back to Registry Search');
       backBtn.href = window.location.pathname;
+      backBtn.style.marginTop = '16px';
       card.appendChild(backBtn);
     }
 
     /* ==========================================================================
-       PDF GENERATION ENGINE (pdf-lib with High-Res Template)
+       PDF GENERATION ENGINE (pdf-lib)
        ========================================================================== */
     async function loadTemplate(PDFDocument, targetUrl) {
       const candidates = targetUrl ? [targetUrl] : ['certificate.png', 'certificate.jpg'];
@@ -685,126 +1036,261 @@
       return null;
     }
 
-    async function generateAndDownloadPdf(student, btnElement) {
+    /**
+     * Builds a single PDF Document with participant details and specific certificate title & ID.
+     */
+    async function buildPdfDocument(student, cert) {
+      const { PDFDocument, rgb, StandardFonts } = window.PDFLib;
+      const templateInfo = await loadTemplate(PDFDocument, CONFIG.TEMPLATE_URL);
+
+      let pdfDoc, page, width, height;
+
+      if (templateInfo) {
+        pdfDoc = templateInfo.doc;
+        page = templateInfo.page;
+        width = templateInfo.width;
+        height = templateInfo.height;
+      } else {
+        pdfDoc = await PDFDocument.create();
+        page = pdfDoc.addPage([842, 595]);
+        const size = page.getSize();
+        width = size.width;
+        height = size.height;
+      }
+
+      const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+      const fontRegular = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+      // Responsive font scaling relative to A4 Landscape baseline (842pt)
+      const scale = width / 842;
+
+      // 1. Participant Name
+      const nameY = height * 0.54;
+      const studentName = student.name || 'Participant';
+      const nameSize = Math.round(34 * scale);
+      const nameWidth = fontBold.widthOfTextAtSize(studentName, nameSize);
+
+      page.drawText(studentName, {
+        x: (width - nameWidth) / 2,
+        y: nameY,
+        size: nameSize,
+        font: fontBold,
+        color: rgb(0.09, 0.35, 0.76) // Brand Navy Blue #1758c3
+      });
+
+      // 2. Underline (Gold Accent)
+      const lineMargin = 32 * scale;
+      page.drawLine({
+        start: { x: Math.max(60 * scale, (width - nameWidth) / 2 - lineMargin), y: nameY - 8 * scale },
+        end: { x: Math.min(width - 60 * scale, (width + nameWidth) / 2 + lineMargin), y: nameY - 8 * scale },
+        thickness: Math.max(1.5, 2 * scale),
+        color: rgb(0.85, 0.47, 0.02) // Gold #d97706
+      });
+
+      // 3. Team Recognition
+      if (student.team) {
+        const teamText = `Team: ${student.team}`;
+        const teamSize = Math.round(18 * scale);
+        const teamWidth = fontBold.widthOfTextAtSize(teamText, teamSize);
+        page.drawText(teamText, {
+          x: (width - teamWidth) / 2,
+          y: nameY - 46 * scale,
+          size: teamSize,
+          font: fontBold,
+          color: rgb(0.06, 0.09, 0.16)
+        });
+      }
+
+      // 4. Certificate Title (e.g. — CERTIFICATE 1 —)
+      const certTitle = (cert && cert.title) ? cert.title.toUpperCase() : `CERTIFICATE ${cert && cert.number ? cert.number : '1'}`;
+      const certBadgeText = `— ${certTitle} —`;
+      const certTitleSize = Math.round(16 * scale);
+      const certTitleWidth = fontBold.widthOfTextAtSize(certBadgeText, certTitleSize);
+
+      page.drawText(certBadgeText, {
+        x: (width - certTitleWidth) / 2,
+        y: nameY - 80 * scale,
+        size: certTitleSize,
+        font: fontBold,
+        color: rgb(0.85, 0.47, 0.02) // Gold accent
+      });
+
+      // 5. Bottom-Left: Certificate ID & Title
+      const certId = cert && cert.id ? cert.id : 'N/A';
+      const certIdText = `Certificate: ${certTitle} | ID: ${certId}`;
+      const metaSize = Math.round(10.5 * scale);
+      page.drawText(certIdText, {
+        x: 44 * scale,
+        y: 44 * scale,
+        size: metaSize,
+        font: fontBold,
+        color: rgb(0.35, 0.42, 0.52)
+      });
+
+      // 6. Bottom-Right: Verification URL
+      const verifyBase = CONFIG.SITE_URL || window.location.href.split('?')[0];
+      const verifyUrl = `${verifyBase}${verifyBase.includes('?') ? '&' : '?'}id=${encodeURIComponent(certId)}`;
+      const verifyText = `Verify authenticity: ${verifyUrl}`;
+      const verifySize = Math.round(9 * scale);
+      const verifyWidth = fontRegular.widthOfTextAtSize(verifyText, verifySize);
+      page.drawText(verifyText, {
+        x: Math.max(44 * scale, width - verifyWidth - 44 * scale),
+        y: 44 * scale,
+        size: verifySize,
+        font: fontRegular,
+        color: rgb(0.35, 0.42, 0.52)
+      });
+
+      const pdfBytes = await pdfDoc.save();
+      const safeFilename = `Code_Fuzion_${certTitle.replace(/[^a-zA-Z0-9]/g, '_')}_${(student.name || 'Participant').replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+
+      return { pdfDoc, pdfBytes, filename: safeFilename };
+    }
+
+    /**
+     * Generates and downloads a single PDF.
+     */
+    async function generateAndDownloadSinglePdf(student, cert, btnElement) {
       if (!window.PDFLib) {
-        alert('PDF library is loading. Please check your connection and retry.');
+        alert('PDF library is loading. Please check your internet connection.');
         return;
       }
 
-      const originalBtnText = btnElement.textContent;
+      const originalText = btnElement.innerHTML;
       btnElement.disabled = true;
-      btnElement.innerHTML = '<span class="spinner"></span>Generating Certificate...';
+      btnElement.innerHTML = '<span class="spinner"></span>Preparing...';
 
       try {
-        const { PDFDocument, rgb, StandardFonts } = window.PDFLib;
-        const templateInfo = await loadTemplate(PDFDocument, CONFIG.TEMPLATE_URL);
-
-        let pdfDoc, page, width, height, isImage;
-
-        if (templateInfo) {
-          pdfDoc = templateInfo.doc;
-          page = templateInfo.page;
-          width = templateInfo.width;
-          height = templateInfo.height;
-          isImage = templateInfo.isImage;
-        } else {
-          // Fallback clean canvas
-          pdfDoc = await PDFDocument.create();
-          page = pdfDoc.addPage([842, 595]);
-          const size = page.getSize();
-          width = size.width;
-          height = size.height;
-          isImage = false;
-        }
-
-        const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-        const fontRegular = await pdfDoc.embedFont(StandardFonts.Helvetica);
-
-        // Responsive font scaling relative to A4 Landscape baseline
-        const scale = width / 842;
-
-        // Position coordinates for high-res themed certificate.png
-        // (y-up coordinate system: height - y_image)
-        const nameY = height * 0.54;
-        const studentName = student.name || 'Participant';
-        const nameSize = Math.round(34 * scale);
-        const nameWidth = fontBold.widthOfTextAtSize(studentName, nameSize);
-
-        // 1. Participant Name (Brand Blue)
-        page.drawText(studentName, {
-          x: (width - nameWidth) / 2,
-          y: nameY,
-          size: nameSize,
-          font: fontBold,
-          color: rgb(0.09, 0.35, 0.76) // #1758c3
-        });
-
-        // 2. Underline (Gold Accent)
-        const lineMargin = 32 * scale;
-        page.drawLine({
-          start: { x: Math.max(60 * scale, (width - nameWidth) / 2 - lineMargin), y: nameY - 8 * scale },
-          end: { x: Math.min(width - 60 * scale, (width + nameWidth) / 2 + lineMargin), y: nameY - 8 * scale },
-          thickness: Math.max(1.5, 2 * scale),
-          color: rgb(0.85, 0.47, 0.02) // #d97706 Gold
-        });
-
-        // 3. Team Recognition
-        if (student.team) {
-          const teamText = `Team: ${student.team}`;
-          const teamSize = Math.round(18 * scale);
-          const teamWidth = fontBold.widthOfTextAtSize(teamText, teamSize);
-          page.drawText(teamText, {
-            x: (width - teamWidth) / 2,
-            y: nameY - 48 * scale,
-            size: teamSize,
-            font: fontBold,
-            color: rgb(0.06, 0.09, 0.16) // #0f172a
-          });
-        }
-
-        // 4. Bottom-Left: Certificate ID
-        const certIdText = `Certificate ID: ${student.id || 'N/A'}`;
-        const metaSize = Math.round(11 * scale);
-        page.drawText(certIdText, {
-          x: 44 * scale,
-          y: 44 * scale,
-          size: metaSize,
-          font: fontBold,
-          color: rgb(0.35, 0.42, 0.52)
-        });
-
-        // 5. Bottom-Right: Verification URL
-        const verifyBase = CONFIG.SITE_URL || window.location.href.split('?')[0];
-        const verifyUrl = `${verifyBase}${verifyBase.includes('?') ? '&' : '?'}id=${encodeURIComponent(student.id || '')}`;
-        const verifyText = `Verify authenticity: ${verifyUrl}`;
-        const verifySize = Math.round(9.5 * scale);
-        const verifyWidth = fontRegular.widthOfTextAtSize(verifyText, verifySize);
-        page.drawText(verifyText, {
-          x: Math.max(44 * scale, width - verifyWidth - 44 * scale),
-          y: 44 * scale,
-          size: verifySize,
-          font: fontRegular,
-          color: rgb(0.35, 0.42, 0.52)
-        });
-
-        // Download Action
-        const pdfBytes = await pdfDoc.save();
-        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-        const downloadUrl = URL.createObjectURL(blob);
-        const downloadAnchor = document.createElement('a');
-        const safeFilename = (student.name || 'Certificate').replace(/[^a-zA-Z0-9_-]/g, '_');
-        downloadAnchor.href = downloadUrl;
-        downloadAnchor.download = `Code_Fuzion_Certificate_${safeFilename}.pdf`;
-        document.body.appendChild(downloadAnchor);
-        downloadAnchor.click();
-        document.body.removeChild(downloadAnchor);
-        URL.revokeObjectURL(downloadUrl);
+        const { pdfBytes, filename } = await buildPdfDocument(student, cert);
+        triggerDownload(pdfBytes, filename);
       } catch (err) {
-        console.error('PDF generation error:', err);
+        console.error('Error generating PDF:', err);
         alert('Failed to generate PDF. Please try again.');
       } finally {
         btnElement.disabled = false;
-        btnElement.textContent = originalBtnText;
+        btnElement.innerHTML = originalText;
+      }
+    }
+
+    /**
+     * Sequentially generates and downloads all 5 PDFs.
+     */
+    async function downloadAllCertificates(student, certList, btnElement) {
+      if (!window.PDFLib) {
+        alert('PDF library is loading. Please check your internet connection.');
+        return;
+      }
+
+      const originalText = btnElement.innerHTML;
+      btnElement.disabled = true;
+
+      try {
+        for (let i = 0; i < certList.length; i++) {
+          btnElement.innerHTML = `<span class="spinner"></span>Downloading ${i + 1}/${certList.length}...`;
+          const { pdfBytes, filename } = await buildPdfDocument(student, certList[i]);
+          triggerDownload(pdfBytes, filename);
+          // Small delay between downloads so the browser handles each cleanly
+          await new Promise(r => setTimeout(r, 400));
+        }
+      } catch (err) {
+        console.error('Batch download error:', err);
+        alert('An error occurred during batch download. Please try individual downloads.');
+      } finally {
+        btnElement.disabled = false;
+        btnElement.innerHTML = originalText;
+      }
+    }
+
+    function triggerDownload(pdfBytes, filename) {
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const downloadUrl = URL.createObjectURL(blob);
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.href = downloadUrl;
+      downloadAnchor.download = filename;
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      document.body.removeChild(downloadAnchor);
+      setTimeout(() => URL.revokeObjectURL(downloadUrl), 5000);
+    }
+
+    /* ==========================================================================
+       EMAIL DELIVERY SYSTEM
+       ========================================================================== */
+    /**
+     * Generates PDFs, converts to base64, and sends via Google Apps Script MailApp.
+     */
+    async function sendCertificatesViaEmail(student, certList, recipientEmail, btnElement, feedbackContainer) {
+      if (!window.PDFLib) {
+        alert('PDF library is loading. Please wait.');
+        return;
+      }
+
+      const originalText = btnElement.innerHTML;
+      btnElement.disabled = true;
+      feedbackContainer.innerHTML = '';
+
+      try {
+        const attachments = [];
+
+        for (let i = 0; i < certList.length; i++) {
+          btnElement.innerHTML = `<span class="spinner"></span>Preparing ${i + 1}/${certList.length}...`;
+          const { pdfBytes, filename } = await buildPdfDocument(student, certList[i]);
+          const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+          const base64 = await blobToBase64(blob);
+
+          attachments.push({
+            name: filename,
+            base64: base64
+          });
+        }
+
+        btnElement.innerHTML = '<span class="spinner"></span>Mailing Certificates...';
+
+        const payload = {
+          action: 'email',
+          reg: student.reg || '',
+          email: recipientEmail,
+          certNumber: certList.length === 1 ? certList[0].number : 'all',
+          attachments: attachments
+        };
+
+        const res = await fetch(CONFIG.APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) {
+          throw new Error(`Server returned HTTP ${res.status}`);
+        }
+
+        const result = await res.json();
+
+        if (result && result.success) {
+          showEmailStatus(
+            feedbackContainer,
+            'success',
+            `✓ Success! ${attachments.length} certificate(s) were successfully emailed to <strong>${escapeText(recipientEmail)}</strong>. Please check your inbox (and spam folder).`
+          );
+        } else {
+          showEmailStatus(
+            feedbackContainer,
+            'error',
+            result.error || 'Failed to deliver email. Please check the email address or contact event admins.'
+          );
+        }
+      } catch (err) {
+        console.error('Email sending error:', err);
+        showEmailStatus(
+          feedbackContainer,
+          'error',
+          `Unable to complete email delivery: ${err.message || 'Network error'}.`
+        );
+      } finally {
+        btnElement.disabled = false;
+        btnElement.innerHTML = originalText;
       }
     }
   </script>
